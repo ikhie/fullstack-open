@@ -1,0 +1,31 @@
+title Uusi muistiinpano SPA
+
+selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+palvelin->selain: HTML
+selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+palvelin->selain: main.css
+selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+palvelin->selain: spa.js
+note over selain:
+selain suorittaa palvelimelta saadun js-koodin, joka
+pyytää palvelimelta JSON-datan
+end note
+
+selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+palvelin->selain: JSON-data
+
+selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/favicon.ico
+palvelin->selain: HTML
+
+note over selain:
+selain renderöi muistiinpanot
+end note
+
+note over selain:
+tallentamisen yhtyedessä selain lisää muistiinpanon taulukkoon, renderöi muistiinpanot
+uudelleen ja lähettää POST-pyynnön palvelimelle
+end note
+
+selain->palvelin: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+palvelin->selain: HTTP 201
