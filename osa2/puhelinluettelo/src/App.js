@@ -65,11 +65,14 @@ const App = () => {
 
     const addPersonObject = personObject => {
       pbService
-      .create(personObject)
+        .create(personObject)
         .then(returnedPerson => {
           setNotification('notification')
           setPersons(persons.concat(returnedPerson))
           setErrorMessage(`Added ${personObject.name} to phonebook`)
+        }).catch(error => {
+          setNotification('error')
+          setErrorMessage(error.response.data.error)
         })
     }
 
