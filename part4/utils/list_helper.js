@@ -16,9 +16,71 @@ const favoriteBlog = (blogs) => {
     return blogs.length === 0 ? [] : [blogs.find((item) => item.likes === max)]
 }
 
+const mapByAuthor = (blogs) => {
+    let mapByAuthor = new Map()
+
+    blogs.map(blog => {
+        let tempArray = []
+        if(mapByAuthor.has(blog.author)){
+            tempArray = mapByAuthor.get(blog.author)
+            tempArray.push(blog)
+            mapByAuthor.set(blog.author, tempArray)
+        }else{
+            tempArray.push(blog)
+            mapByAuthor.set(blog.author, tempArray)
+        }
+    })
+
+    return mapByAuthor
+}
+
+const mostLikes = (blogs) => {
+
+    const blogsByAuthor = mapByAuthor(blogs)
+    let mostLikes = {
+        author: '', 
+        likes: 0
+    }
+
+    blogsByAuthor.forEach((blogs, author) => {
+        const total = totalLikes(blogs)
+        if(mostLikes.likes <= total){
+            mostLikes.author = author
+            mostLikes.likes = total
+        }
+    })
+
+    return mostLikes
+}
+
+
+const mostBlogs = (blogs) => {
+
+    let mostBlogs = {
+        author: '',
+        blogs: 0
+    }
+
+    const sorted = mapByAuthor(blogs)
+
+    sorted.forEach((blogs, author) => {
+        if(blogs.length > mostBlogs.blogs){
+            mostBlogs.author = author
+            mostBlogs.blogs = blogs.length
+        }
+    })
+
+
+    return mostBlogs 
+}
+
+
+
 
 module.exports = {
     favoriteBlog,
     dummy,
-    totalLikes
+    totalLikes,
+    mostBlogs,
+    mostLikes
 }

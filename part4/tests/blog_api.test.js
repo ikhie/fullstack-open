@@ -21,7 +21,6 @@ beforeEach(async () => {
     }))
 })
 
-
 describe('fetching blogs', () => {
     test('return all blogs', async() => {
 
@@ -80,8 +79,10 @@ describe('removing blogs', () => {
     test('return 204, if blog deleted', async() => {
         const blogs = helper.initialBlogs;
         const blogToDelete = blogs[0]
+        const response = await api.post('/api/login').send({username: 'hellas', password: 'salasana1234545'})
+        const token = response.body.token
 
-        await api.delete(`/api/blogs/${blogToDelete._id}`).expect(204)
+        await api.delete(`/api/blogs/${blogToDelete._id}`).set("authorization", "bearer " + token).expect(204)
     })
 
     test('blog not found from db after deletion', async() => {

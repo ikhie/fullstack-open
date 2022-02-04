@@ -52,6 +52,7 @@ describe('favourite blog', () => {
       author: "Edsger W. Dijkstra",
       url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
       likes: 12,
+      user: "61eac7c1833ca3cb4e8eb612",
       __v: 0
     }
   ]
@@ -71,5 +72,17 @@ describe('favourite blog', () => {
   test('when list is empty equals empty array', () => {
     const result = listHelper.favoriteBlog(emptyList)
     expect(result).toEqual([])
+  })
+})
+
+describe('most blogs', () => {
+  test('find author with most blogs', () => {
+    const result = listHelper.mostBlogs(helper.initialBlogs)
+    expect(result).toEqual({author: 'Robert C. Martin', blogs: 3})
+  })
+
+  test('find author with most likes', () => {
+    const result =  listHelper.mostLikes(helper.initialBlogs)
+    expect(result).toEqual({ author: 'Edsger W. Dijkstra', likes: 17 })
   })
 })
